@@ -1,0 +1,7 @@
+*.tfstate
+*.tfstate.backup
+.terraform.tfstate.lock.info
+.terraform/
+
+# Ignore remote backend state files
+!infrastructure/terraform/backend/terraform.tfstate*
