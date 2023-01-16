@@ -17,4 +17,4 @@ POST http://gateway.3001cf25469d4824b0ad.westeurope.aksapp.io/upload
 ```http request
 GET http://gateway.3001cf25469d4824b0ad.westeurope.aksapp.io/download?fid=<Generated file identified>
 ```
-> curl --output video.mp3 -X GET -H 'Authorization: Bearer \<JWT Token\>' "http://gateway.3001cf25469d4824b0ad.westeurope.aksapp.io/download?fid=\<Generated fid\>"
+> curl --output video.mp3 -X GET -H 'Authorization: Bearer \<JWT Token\>' "http://gateway.3001cf25469d4824b0ad.westeurope.aksapp.io/download?fid= \<Generated fid\>"
