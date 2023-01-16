@@ -5,7 +5,7 @@
 .terraform/
 
 # Ignore remote backend state files
-!infrastructure/terraform/backend/terraform.tfstate*
+!infrastructure/terraform/0-backend/terraform.tfstate*
 
 # Python
 .venv
