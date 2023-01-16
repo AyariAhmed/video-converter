@@ -48,7 +48,7 @@ We built 5 well isolated and maintainable infrastructure layers (Microstacks):
 We built the app using Docker and then Kubernetes for deployment
 
 ## Deployment Strategy
-
+We used Rolling release deployment strategy to have the monitoring and rollback advantages
 
 # API Definiton
 - Login endpoint
