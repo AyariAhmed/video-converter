@@ -3,7 +3,7 @@ data "azurerm_resource_group" "devops-project" {
 }
 
 resource "azurerm_kubernetes_cluster" "converter-cluster" {
-  name                = "converter-cluster"
+  name                = var.aks_cluster_name
   location            = data.azurerm_resource_group.devops-project.location
   resource_group_name = data.azurerm_resource_group.devops-project.name
   dns_prefix          = "converter-cluster"
