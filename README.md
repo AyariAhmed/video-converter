@@ -26,13 +26,6 @@ processing
 
 - We used prometheus to collet metrics data and grafana to visualize them
 
-## 2.Logs
-
-
-## 3.Traces
-
-
-
 
 # Automation
 
