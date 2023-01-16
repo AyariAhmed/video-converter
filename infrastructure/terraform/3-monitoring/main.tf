@@ -1,34 +1,69 @@
-resource "kubernetes_namespace" "argocd" {
+resource "kubernetes_namespace" "namespace" {
   metadata {
-    name = var.kubernetes_argocd_namespace
+    name = "monitoring"
   }
 }
 
-resource "helm_release" "argocd" {
-  depends_on = [kubernetes_namespace.argocd]
+resource "helm_release" "prometheus" {
+  chart      = "prometheus"
+  name       = "prometheus"
+  namespace  = kubernetes_namespace.namespace.id
+  repository = "https://prometheus-community.github.io/helm-charts"
+  version    = "15.5.3"
 
-  name       = "argocd"
-  repository = data.helm_repository.argo.metadata[0].name
-  chart      = "argo-cd"
-  namespace  = var.kubernetes_argocd_namespace
-  version    = var.argocd_helm_chart_version == "" ? null : var.argocd_helm_chart_version
+  set {
+    name  = "podSecurityPolicy.enabled"
+    value = false
+  }
+
+  set {
+    name  = "server.persistentVolume.enabled"
+    value = false
+  }
+
+  # You can provide a map of value using yamlencode. Don't forget to escape the last element after point in the name
+  set {
+    name = "server\\.resources"
+    value = yamlencode({
+      limits = {
+        cpu    = "200m"
+        memory = "50Mi"
+      }
+      requests = {
+        cpu    = "100m"
+        memory = "30Mi"
+      }
+    })
+  }
+}
+
+/* resource "kubernetes_secret" "grafana" {
+  metadata {
+    name      = "grafana"
+    namespace = kubernetes_namespace.namespace.id
+  }
+
+  data = {
+    admin-user     = "admin"
+    admin-password = "admin"
+  }
+}
+
+
+resource "helm_release" "grafana" {
+  chart      = "grafana"
+  name       = "grafana"
+  repository = "https://grafana.github.io/helm-charts"
+  namespace  = kubernetes_namespace.namespace.id
+  version    = "6.24.1"
 
   values = [
-    templatefile(
-      "${path.module}/templates/values.yaml.tpl",
-      {
-        "argocd_server_host"          = var.argocd_server_host
-        "eks_iam_argocd_role_arn"     = data.aws_iam_role.argocd.arn
-        "argocd_github_client_id"     = var.argocd_github_client_id
-        "argocd_github_client_secret" = var.argocd_github_client_secret
-        "argocd_github_org_name"      = var.argocd_github_org_name
-
-        "argocd_ingress_enabled"                 = var.argocd_ingress_enabled
-        "argocd_ingress_tls_acme_enabled"        = var.argocd_ingress_tls_acme_enabled
-        "argocd_ingress_ssl_passthrough_enabled" = var.argocd_ingress_ssl_passthrough_enabled
-        "argocd_ingress_class"                   = var.argocd_ingress_class
-        "argocd_ingress_tls_secret_name"         = var.argocd_ingress_tls_secret_name
-      }
-    )
+    templatefile("${path.module}/values/grafana-values.yaml", {
+      admin_existing_secret = kubernetes_secret.grafana.metadata[0].name
+      admin_user_key        = "admin"
+      admin_password_key    = "admin"
+      prometheus_svc        = "${helm_release.prometheus.name}-server"
+      replicas              = 1
+    })
   ]
-}
+} */

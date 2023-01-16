@@ -20,6 +20,16 @@ locals {
   cluster_ca_certificate = base64decode(local.kube_config.cluster_ca_certificate)
 }
 
+provider "kubernetes" {
+  host                   = local.host
+  username               = local.username
+  password               = local.password
+  client_certificate     = local.client_certificate
+  client_key             = local.client_key
+  cluster_ca_certificate = local.cluster_ca_certificate
+}
+
+
 provider "helm" {
     kubernetes {
     host                   = local.host
