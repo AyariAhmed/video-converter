@@ -21,7 +21,7 @@ Converting mp4 videos to mp3 in a microservices architecture.
 # Observability
 ## 1.Metrics
 We implemented the following metrics:
-- metric that allow us to track how many request we are
+- A metric that allow us to track how many request we are
 processing
 
 -
@@ -37,12 +37,18 @@ processing
 # Automation
 
 ## Helm
-We created Helm Charts that Argo CD will use for automated deployment. 
-Once Argo CD observes a change in the infrastructure desired state, it will apply those changes.
+We created Helm Charts (for MongoDB, Postgres and RabbitMQ) that Argo CD will use for automated deployment. 
+Once Argo CD observes a change in the infrastructure desired state in the github repository, it will apply those changes.
 
 
 ## Terraform
-We used this IAC tool to provision infrastructure and set-up the first Helm charts.
+We used Terraform which is an IAC tool to provision infrastructure and set-up the first Helm charts.
+We built 5 well isolated and maintainable infrastructure layers (Microstacks):
+- Layer0:
+- Layer1: Provisioning an Azure Kubernetes Cluster whithin the ressource group created in layer0
+- Layer2: Provisioning MongoDB, Postgres, and RabbitMQ ressources based on the helm charts that we prepared
+- Layer3: Setting up ArgoCD
+- Layer4:
 
 
 # Deployment
@@ -50,7 +56,8 @@ We built the app using Docker and then Kubernetes for deployment
 
 ## Deployment Strategy
 
-## API Definiton
+
+# API Definiton
 - Login endpoint
 ```http request
 POST http://gateway.3001cf25469d4824b0ad.westeurope.aksapp.io/login
