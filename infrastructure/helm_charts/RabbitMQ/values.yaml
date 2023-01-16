@@ -4,4 +4,4 @@ service:
 
 ingress:
   class: addon-http-application-routing
-  host: rabbit-mq.c9de0470a88f44dbbb83.westeurope.aksapp.io
+  host: rabbit-mq.3001cf25469d4824b0ad.westeurope.aksapp.io
