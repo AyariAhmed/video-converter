@@ -1,3 +1,4 @@
+# Terraform
 *.tfstate
 *.tfstate.backup
 .terraform.tfstate.lock.info
@@ -5,3 +6,6 @@
 
 # Ignore remote backend state files
 !infrastructure/terraform/backend/terraform.tfstate*
+
+# Python
+.venv
