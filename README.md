@@ -24,7 +24,7 @@ We implemented the following metrics:
 - A metric that allow us to track how many request we are
 processing
 
--
+- We used prometheus to collet metrics data and grafana to visualize them
 
 ## 2.Logs
 
