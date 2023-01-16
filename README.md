@@ -44,7 +44,7 @@ Once Argo CD observes a change in the infrastructure desired state in the github
 ## Terraform
 We used Terraform which is an IAC tool to provision infrastructure and set-up the first Helm charts.
 We built 5 well isolated and maintainable infrastructure layers (Microstacks):
-- Layer0:
+- Layer0: Defining and configuring the provider (Azure)
 - Layer1: Provisioning an Azure Kubernetes Cluster whithin the ressource group created in layer0
 - Layer2: Provisioning MongoDB, Postgres, and RabbitMQ ressources based on the helm charts that we prepared
 - Layer3: Setting up ArgoCD
