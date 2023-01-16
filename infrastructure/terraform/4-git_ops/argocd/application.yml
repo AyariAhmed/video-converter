@@ -1,0 +1,17 @@
+server:
+  additionalApplications:
+   - name: cluster-config
+     namespace: argocd
+     project: default
+     source:
+       repoURL: https://github.com/AyariAhmed/video-converter.git
+       targetRevision: HEAD
+       path: src
+       directory:
+         recurse: true
+     destination:
+       server: https://kubernetes.default.svc
+     syncPolicy:
+       automated:
+         prune: false
+         selfHeal: false
